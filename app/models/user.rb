@@ -6,4 +6,21 @@ class User < ApplicationRecord
 
   has_many :services, dependent: :destroy
   has_many :bookings, through: :services, dependent: :destroy
+  validates :slug, presence: true, uniqueness: true
+  validates :display_name, presence: true, allow_blank: false
+
+  private
+
+  def set_slug
+    return if slug.present?
+
+    base = (display_name.presence || email.split("@").first).parameterize
+    candidate = base
+    n = 2
+    while User.exists?(slug: candidate)
+      candidate = "#{base}-#{n}"
+      n += 1
+    end
+    self.slug = candidate
+  end
 end
