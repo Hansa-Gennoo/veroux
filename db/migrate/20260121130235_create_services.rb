@@ -7,7 +7,7 @@ class CreateServices < ActiveRecord::Migration[8.1]
       t.integer :duration_minutes
       t.integer :price_cents
       t.string :currency
-      t.integer :goal
+      t.integer :goal, default: 0, null: false
       t.boolean :is_active, default: true, null: false
 
       t.timestamps
