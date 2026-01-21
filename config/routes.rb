@@ -26,5 +26,14 @@ Rails.application.routes.draw do
 
   get "/p/:slug", to: "providers#show", as: :provider
 
+  resources :bookings, only: [] do
+    member do
+      patch :confirm, to: "bookings_status#confirm"
+      patch :cancel, to: "bookings_status#cancel"
+    end
+  end
+
+
+
 
 end
