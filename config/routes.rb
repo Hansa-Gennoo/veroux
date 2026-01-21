@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/p/:slug", to: "providers#show", as: :provider
+  get "/@:slug", to: "providers#show", as: :provider
 
   resources :bookings, only: [ :index, :show ] do
     member do
