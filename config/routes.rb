@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/booking/success", to: "bookings#success", as: :booking_success
+
+
 
 
 

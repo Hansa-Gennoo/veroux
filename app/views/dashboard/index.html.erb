@@ -19,6 +19,11 @@
       <strong><%= b.client_name %></strong> — <%= b.client_email %> —
       <%= b.starts_at %> — <%= b.status %>
       (Service: <%= b.service.title %>)
+
+      <% if b.status == "pending" %>
+        <%= button_to "Confirm", confirm_booking_path(b), method: :patch %>
+        <%= button_to "Cancel", cancel_booking_path(b), method: :patch %>
+      <% end %>
     </li>
   <% end %>
 </ul>

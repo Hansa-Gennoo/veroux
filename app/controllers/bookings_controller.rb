@@ -8,11 +8,17 @@ class BookingsController < ApplicationController
   def create
     @booking = @service.bookings.new(booking_params)
     if @booking.save
-      redirect_to root_path, notice: "Booking request received!"
+      redirect_to booking_success_path, notice: "Booking request received!"
+
     else
       render :new, status: :unprocessable_entity
     end
   end
+
+  def
+    success
+  end
+
 
   private
 
