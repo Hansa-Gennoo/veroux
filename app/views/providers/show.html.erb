@@ -1,12 +1,36 @@
 <h1><%= @provider.display_name %></h1>
-<p><%= @provider.bio %></p>
+
+<% if @provider.bio.present? %>
+  <p style="max-width: 600px; opacity: 0.8;">
+    <%= @provider.bio %>
+  </p>
+<% end %>
 
 <h2>Services</h2>
 
 <% if @services.any? %>
-  <ul>
+  <ul style="list-style: none; padding: 0; max-width: 600px;">
     <% @services.each do |service| %>
-      <li><%= service.title %></li>
+      <li style="padding: 16px 0; border-bottom: 1px solid #eee;">
+        <strong><%= service.title %></strong><br>
+
+        <% if service.duration_minutes.present? %>
+          <span style="font-size: 14px; opacity: 0.7;">
+            <%= service.duration_minutes %> min
+          </span>
+        <% end %>
+
+        <% if service.price_cents.present? %>
+          •
+          <span style="font-size: 14px; opacity: 0.7;">
+            <%= service_price(service) %>
+          </span>
+        <% end %>
+
+        <div style="margin-top: 8px;">
+          <%= link_to "Book now", "#", style: "font-size: 14px;" %>
+        </div>
+      </li>
     <% end %>
   </ul>
 <% else %>
