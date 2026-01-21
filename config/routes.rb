@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "bookings/new"
+  get "bookings/create"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   authenticated :user do
