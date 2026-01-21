@@ -3,7 +3,7 @@
 
 <h2>Services</h2>
 
-<% if @services.any? %>
+<% if @services.is_active? %>
   <ul>
     <% @services.each do |service| %>
       <li>

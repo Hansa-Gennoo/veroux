@@ -23,7 +23,10 @@
           <%= link_to "Overview", dashboard_root_path %>
           <%= link_to "Services", dashboard_services_path %>
 
-          <%= link_to "Bookings", dashboard_service_bookings_path(@services) %>
+          <% if @service.present? %>
+            <%= link_to "Bookings", dashboard_service_bookings_path(@service) %>
+          <% end %>
+
           <%= link_to "Profile", dashboard_profile_path %>
         </nav>
         <hr>

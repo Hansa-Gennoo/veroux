@@ -1,37 +1,27 @@
 Rails.application.routes.draw do
-  get "providers/show"
-  get "bookings/new"
-  get "bookings/create"
   devise_for :users, controllers: { registrations: "users/registrations" }
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   authenticated :user do
-    root to: "dashboard#index", as: :authenticated_root
+    root to: "dashboard/overview#index", as: :authenticated_root
   end
   root "pages#home"
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-  #
   namespace :dashboard do
-    get "/", to: "overview#index", as: :root
-    resource :profile, only: [:show, :edit, :update]
-    resources :services
+    root to: "overview#index"
+    resource :profile, only: [ :show, :edit, :update ]
+
+    resources :bookings, only: [ :index, :show ]
+
     resources :services do
-      resources :bookings, only: [:new, :create]
+      resources :bookings, only: [ :new, :create ]
     end
   end
 
   get "/p/:slug", to: "providers#show", as: :provider
 
-  resources :bookings, only: [:index, :show] do
+  resources :bookings, only: [ :index, :show ] do
     member do
       patch :confirm, to: "bookings_status#confirm"
       patch :cancel, to: "bookings_status#cancel"
@@ -40,9 +30,6 @@ Rails.application.routes.draw do
 
   get "/booking/success", to: "bookings#success", as: :booking_success
 
-  resource :availability, only: [:show, :edit, :update]
-  resource :profile, only: [:show, :edit, :update]
-
-
-
+  resource :availability, only: [ :show, :edit, :update ]
+  resource :profile, only: [ :show, :edit, :update ]
 end
