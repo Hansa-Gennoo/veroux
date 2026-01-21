@@ -1,0 +1,18 @@
+<h1><%= @provider.display_name %></h1>
+<p><%= @provider.bio %></p>
+
+<h2>Services</h2>
+
+<% if @services.any? %>
+  <ul>
+    <% @services.each do |service| %>
+      <li>
+        <strong><%= service.title %></strong><br>
+        <%= service.description %><br>
+        <%= link_to "Book", new_service_booking_path(service) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No active services yet.</p>
+<% end %>

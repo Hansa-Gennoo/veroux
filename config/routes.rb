@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "providers/show"
   get "bookings/new"
   get "bookings/create"
   devise_for :users, controllers: { registrations: "users/registrations" }
@@ -22,5 +23,8 @@ Rails.application.routes.draw do
   resources :services do
     resources :bookings, only: [:new, :create]
   end
+
+  get "/p/:slug", to: "providers#show", as: :provider
+
 
 end
