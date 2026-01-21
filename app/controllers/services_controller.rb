@@ -1,4 +1,4 @@
-class ServicesController < ApplicationController
+class ServicesController < BaseController
   before_action :authenticate_user!
   before_action :set_service, only: %i[show edit update destroy]
 

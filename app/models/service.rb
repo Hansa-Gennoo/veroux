@@ -1,6 +1,8 @@
 class Service < ApplicationRecord
   belongs_to :user
 
+  attribute :status, :integer
+
   enum :goal, { discovery: 0, paid: 1, qualify: 2 }
   enum :status, { draft: 0, published: 1, archived: 2 }
 

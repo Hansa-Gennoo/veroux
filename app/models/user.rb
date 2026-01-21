@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  before_validation :set_slug, on: :create
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -14,13 +15,17 @@ class User < ApplicationRecord
   def set_slug
     return if slug.present?
 
-    base = (display_name.presence || email.split("@").first).parameterize
+    base = email.to_s.split("@").first.to_s.parameterize
+    base = "user" if base.blank?
+
     candidate = base
     n = 2
+
     while User.exists?(slug: candidate)
       candidate = "#{base}-#{n}"
       n += 1
     end
+
     self.slug = candidate
   end
 end

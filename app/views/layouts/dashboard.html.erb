@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Veroux Dashboard</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header style="padding: 16px; border-bottom: 1px solid #eee;">
+      <strong>Veroux</strong>
+      <span style="float:right;">
+        <%= current_user.display_name.presence || current_user.email %> |
+        <%= button_to "Log out", destroy_user_session_path, method: :delete %>
+      </span>
+    </header>
+
+    <div style="display:flex; min-height: calc(100vh - 60px);">
+      <aside style="width: 240px; border-right: 1px solid #eee; padding: 16px;">
+        <nav style="display:flex; flex-direction:column; gap:10px;">
+          <%= link_to "Overview", dashboard_root_path %>
+          <%= link_to "Services", dashboard_services_path %>
+
+          <%= link_to "Bookings", dashboard_service_bookings_path(@services) %>
+          <%= link_to "Profile", dashboard_profile_path %>
+        </nav>
+        <hr>
+
+        <% if current_user.slug.present? %>
+          <p style="font-size: 12px; opacity: 0.7;">
+            Public page:<br>
+            <%= link_to "/p/#{current_user.slug}", provider_path(current_user.slug) %>
+          </p>
+        <% end %>
+      </aside>
+
+      <main style="flex:1; padding: 20px;">
+        <% if notice %><p style="color: green;"><%= notice %></p><% end %>
+        <% if alert %><p style="color: red;"><%= alert %></p><% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

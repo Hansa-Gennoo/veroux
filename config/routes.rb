@@ -19,14 +19,19 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :services
-  resources :services do
-    resources :bookings, only: [:new, :create]
+  #
+  namespace :dashboard do
+    get "/", to: "overview#index", as: :root
+    resource :profile, only: [:show, :edit, :update]
+    resources :services
+    resources :services do
+      resources :bookings, only: [:new, :create]
+    end
   end
 
   get "/p/:slug", to: "providers#show", as: :provider
 
-  resources :bookings, only: [] do
+  resources :bookings, only: [:index, :show] do
     member do
       patch :confirm, to: "bookings_status#confirm"
       patch :cancel, to: "bookings_status#cancel"
@@ -35,7 +40,8 @@ Rails.application.routes.draw do
 
   get "/booking/success", to: "bookings#success", as: :booking_success
 
-
+  resource :availability, only: [:show, :edit, :update]
+  resource :profile, only: [:show, :edit, :update]
 
 
 
