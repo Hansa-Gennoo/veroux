@@ -1,2 +1,25 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
+<h1>Book: <%= @service.title %></h1>
+
+<%= form_with model: [@service, @booking] do |f| %>
+  <div>
+    <%= f.label :client_name %><br>
+    <%= f.text_field :client_name %>
+  </div>
+
+  <div>
+    <%= f.label :client_email %><br>
+    <%= f.email_field :client_email %>
+  </div>
+
+  <div>
+    <%= f.label :starts_at, "Preferred date & time" %><br>
+    <%= f.datetime_local_field :starts_at %>
+  </div>
+
+  <div>
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+
+  <%= f.submit "Request booking" %>
+<% end %>

@@ -1,2 +1,11 @@
-<h1>Services#show</h1>
-<p>Find me in app/views/services/show.html.erb</p>
+<h1><%= @service.title %></h1>
+<p><%= @service.description %></p>
+
+<p>
+  Duration: <%= @service.duration_minutes %> mins
+  | Price: <%= @service.price_cents.to_i / 100.0 %>
+</p>
+
+<p>
+  <%= link_to "Book this service", new_service_booking_path(@service) %>
+</p>
