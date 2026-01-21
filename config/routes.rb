@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   namespace :dashboard do
     root to: "overview#index"
+
+    resource :availability, only: [ :show, :create, :edit, :update ]
+
     resource :profile, only: [ :show, :edit, :update ]
 
     resources :bookings, only: [ :index, :show ]
@@ -30,6 +33,6 @@ Rails.application.routes.draw do
 
   get "/booking/success", to: "bookings#success", as: :booking_success
 
-  resource :availability, only: [ :show, :edit, :update ]
+  resource :availability, only: [ :show ]
   resource :profile, only: [ :show, :edit, :update ]
 end

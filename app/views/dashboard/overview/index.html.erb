@@ -1,0 +1,23 @@
+<h1>Overview</h1>
+
+<p>
+  <%= link_to "Create a service", new_dashboard_service_path %> |
+  <%= link_to "Edit availability", edit_dashboard_availability_path %>
+</p>
+
+<h2>Recent services</h2>
+<ul>
+  <% @services.each do |s| %>
+    <li><%= link_to s.title, dashboard_service_path(s) %></li>
+  <% end %>
+</ul>
+
+<h2>Upcoming bookings</h2>
+<ul>
+  <% @bookings.each do |b| %>
+    <li>
+      <strong><%= b.client_name %></strong> — <%= b.starts_at %> — <%= b.status %>
+      (<%= b.service.title %>)
+    </li>
+  <% end %>
+</ul>
