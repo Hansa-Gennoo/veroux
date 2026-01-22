@@ -24,7 +24,7 @@
           <%= link_to "Services", dashboard_services_path %>
 
           <% if @service.present? %>
-            <%= link_to "Bookings", dashboard_service_bookings_path(@service) %>
+            <%= link_to "Bookings", dashboard_bookings_path %>
           <% end %>
 
           <%= link_to "Profile", dashboard_profile_path %>
