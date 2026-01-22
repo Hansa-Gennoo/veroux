@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   before_validation :normalize_slug, :set_slug, on: :create
+  after_create :ensure_weekly_availability
 
   VALID_SLUG = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
 
@@ -20,6 +21,8 @@ class User < ApplicationRecord
 
   has_many :services, dependent: :destroy
   has_many :bookings, through: :services, dependent: :destroy
+  has_many :weekly_availabilities, dependent: :destroy
+
   validates :slug,
   presence: true,
   uniqueness: true,
@@ -69,5 +72,15 @@ class User < ApplicationRecord
 
   def has_published_service?
     services.published.exists?
+  end
+
+  def ensure_weekly_availability
+    (0..6).each do |weekday|
+      WeeklyAvailability.find_or_create_by!(user: self, weekday: weekday) do |wa|
+        wa.enabled = (1..5).include?(weekday) # default Mon-Fri on
+        wa.start_time = 540 # "09:00"
+        wa.end_time = 1020 # "17:00"
+      end
+    end
   end
 end

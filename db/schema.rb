@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_22_083355) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_22_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_083355) do
     t.time "start_time"
     t.datetime "updated_at", null: false
     t.index ["service_id"], name: "index_availabilities_on_service_id"
+  end
+
+  create_table "availability_exceptions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.time "end_time"
+    t.string "reason"
+    t.time "start_time"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_availability_exceptions_on_user_id"
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -70,7 +81,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_083355) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  create_table "weekly_availabilities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "enabled", default: false, null: false
+    t.time "end_time"
+    t.time "start_time"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "weekday"
+    t.index ["user_id", "weekday"], name: "index_weekly_availabilities_on_user_id_and_weekday", unique: true
+    t.index ["user_id"], name: "index_weekly_availabilities_on_user_id"
+  end
+
   add_foreign_key "availabilities", "services"
+  add_foreign_key "availability_exceptions", "users"
   add_foreign_key "bookings", "services"
   add_foreign_key "services", "users"
+  add_foreign_key "weekly_availabilities", "users"
 end
