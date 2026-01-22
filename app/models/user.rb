@@ -10,6 +10,9 @@ class User < ApplicationRecord
 
   validate :slug_not_reserved
   validate :slug_change_allowed, on: :update
+
+  enum :plan, { starter: 0, growth: 1, agency: 2 }, prefix: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -22,7 +25,7 @@ class User < ApplicationRecord
   uniqueness: true,
   length: { minimum: 3, maximum: 24 },
   format: { with: VALID_SLUG, message: "only lowercase letters, numbers, and single hyphens" }
-  validates :display_name, presence: true, allow_blank: false
+  validates :display_name, presence: true, allow_blank: false, if: :has_published_services?
 
   private
 
@@ -61,5 +64,10 @@ class User < ApplicationRecord
     if services.where(status: Service.statuses[:published]).exists?
       errors.add(:slug, "can’t be changed after you’ve published a service")
     end
+  end
+
+
+  def has_published_service?
+    services.published.exists?
   end
 end
