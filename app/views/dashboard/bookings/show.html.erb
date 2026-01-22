@@ -1,0 +1,35 @@
+<header style="display:flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 18px;">
+  <div>
+    <h1 style="font-size: 22px; margin: 0;">Booking details</h1>
+    <p style="margin: 6px 0 0; color: rgba(0,0,0,.65);">
+      Review the booking details and keep your schedule clean.
+    </p>
+  </div>
+
+  <div style="display:flex; gap: 10px;">
+    <%= link_to "Back", dashboard_bookings_path,
+      style: "text-decoration:none; font-size: 13px; padding: 10px 14px; border-radius: 14px; border: 1px solid rgba(0,0,0,.14); background: #fff;" %>
+  </div>
+</header>
+
+<section style="padding: 16px; border: 1px solid rgba(0,0,0,.08); border-radius: 16px; background: #fff;">
+  <dl style="display:grid; grid-template-columns: 180px 1fr; gap: 10px 14px; margin:0;">
+    <dt style="color: rgba(0,0,0,.6);">Client</dt>
+    <dd style="margin:0;"><%= @booking.client_name %></dd>
+
+    <dt style="color: rgba(0,0,0,.6);">Email</dt>
+    <dd style="margin:0;"><%= @booking.client_email %></dd>
+
+    <dt style="color: rgba(0,0,0,.6);">Date & time</dt>
+    <dd style="margin:0;"><%= l(@booking.starts_at, format: :long) rescue @booking.starts_at.to_s %></dd>
+
+    <dt style="color: rgba(0,0,0,.6);">Service</dt>
+    <dd style="margin:0;"><%= @booking.service.name %></dd>
+
+    <dt style="color: rgba(0,0,0,.6);">Status</dt>
+    <dd style="margin:0;"><%= @booking.status.to_s.humanize %></dd>
+
+    <dt style="color: rgba(0,0,0,.6);">Payment</dt>
+    <dd style="margin:0;"><%= @booking.payment_status.to_s.humanize %></dd>
+  </dl>
+</section>

@@ -1,7 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :service
 
-  enum :status, { confirmed: 0, cancelled: 1 }
+  enum :status, { pending: 0, confirmed: 1, cancelled: 2 }, default: :pending
 
   enum :payment_status, { unpaid: 0, paid: 1, refunded: 2 }
 

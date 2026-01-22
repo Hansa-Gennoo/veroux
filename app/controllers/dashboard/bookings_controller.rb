@@ -8,7 +8,13 @@ module Dashboard
                          .order(starts_at: :asc)
     end
 
-    def show; end
+    def show
+      @booking =
+        Booking
+          .joins(:service)
+          .where(services: { user_id: current_user.id })
+          .find(params[:id])
+    end
 
     def confirm
       @booking.update!(status: "confirmed")

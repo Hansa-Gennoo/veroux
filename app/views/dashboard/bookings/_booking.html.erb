@@ -1,0 +1,28 @@
+<article style="padding: 14px 16px; border: 1px solid rgba(0,0,0,.08); border-radius: 14px; background: #fff; display: flex; justify-content: space-between; gap: 16px;">
+  <div style="min-width: 0;">
+    <div style="display:flex; gap:10px; align-items:center; flex-wrap: wrap;">
+      <strong style="font-size: 15px;"><%= booking.client_name %></strong>
+
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(0,0,0,.12);">
+        <%= booking.status.to_s.humanize %>
+      </span>
+
+      <span style="font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(0,0,0,.12);">
+        <%= booking.payment_status.to_s.humanize %>
+      </span>
+    </div>
+
+    <div style="margin-top: 6px; color: rgba(0,0,0,.65); font-size: 13px; display:flex; gap:10px; flex-wrap: wrap;">
+      <span><%= l(booking.starts_at, format: :long) rescue booking.starts_at.to_s %></span>
+      <span>•</span>
+      <span><%= booking.service.name %></span>
+      <span>•</span>
+      <span><%= booking.client_email %></span>
+    </div>
+  </div>
+
+  <div style="flex: none; display:flex; align-items:center;">
+    <%= link_to "View", dashboard_booking_path(booking),
+      style: "text-decoration:none; font-size: 13px; padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(0,0,0,.14);" %>
+  </div>
+</article>
