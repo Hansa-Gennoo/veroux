@@ -3,7 +3,13 @@ class BookingsController < ApplicationController
 
   def new
     @booking = @service.bookings.new
+    @slots = SlotGenerator.new(
+      service: @service,
+      from_date: Date.current,
+      to_date: Date.current + 14
+    ).call
   end
+
 
   def create
     @booking = @service.bookings.new(booking_params)

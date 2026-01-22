@@ -1,0 +1,21 @@
+<h1>Edit Availability</h1>
+
+<%= form_with url: dashboard_availability_path, method: :patch do %>
+  <table>
+    <thead>
+      <tr><th>Day</th><th>Enabled</th><th>Start</th><th>End</th></tr>
+    </thead>
+    <tbody>
+      <% @availabilities.each do |wa| %>
+        <tr>
+          <td><%= Date::DAYNAMES[wa.weekday] %></td>
+          <td><%= check_box_tag "weekly_availabilities[#{wa.id}][enabled]", "1", wa.enabled %></td>
+          <td><%= text_field_tag "weekly_availabilities[#{wa.id}][start_time]", wa.start_time %></td>
+          <td><%= text_field_tag "weekly_availabilities[#{wa.id}][end_time]", wa.end_time %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= submit_tag "Save" %>
+<% end %>
